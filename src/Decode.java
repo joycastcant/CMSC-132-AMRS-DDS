@@ -5,20 +5,21 @@ public class Decode {
 	public boolean occupied;
 	public int ir;
 
-	public Decode(HashMap<Integer, Instruction> instructions, int ir){
+	public Decode(HashMap<Integer, Instruction> instructions, int ir, MSC msc){
+		System.out.println("Decoding...");
 		this.instructions = instructions;
 		this.occupied = true;
 	
 		Instruction value = instructions.get(ir);
-		Execute execute = new Execute();
+		Execute execute = new Execute(msc);
 		String operand = value.getOperation();
 		String op1 = value.getOp1();
 		String op2 = value.getOp2();
-		int oP2 = Integer.valueOf(op2);
 
-		System.out.println(value.getInstruction());
+		System.out.println("Instruction: " + value.getInstruction());
 
 		if (operand.equals("LOAD")){
+			int oP2 = Integer.valueOf(op2);
 			execute.load(op1, oP2);
 		}
 

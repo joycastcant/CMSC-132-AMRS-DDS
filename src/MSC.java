@@ -1,15 +1,15 @@
 import java.util.HashMap;
 
 public class MSC {
-	private static HashMap<String, Integer> registers;
-	private static int a;
-	private static int ir;
-	private static int of;
-	private static int nf;
-	private static int zf;
-	private static int pc;
-	private static int mar;
-	private static int mbr;
+	private HashMap<String, Integer> registers;
+	private int a;
+	private int ir;
+	private int of;
+	private int nf;
+	private int zf;
+	private int pc;
+	private int mar;
+	private int mbr;
 
 	public MSC(){
 		pc = 0;
@@ -19,75 +19,81 @@ public class MSC {
 		}
 	}
 
-	public static void incrementPC(){
+	public void incrementPC(){
 		pc++;
 	}
 
-	public static int getPC(){
+	public int getPC(){
 		return pc;
 	}
 
-	public static HashMap<String, Integer> getRegisters(){
+	public HashMap<String, Integer> getRegisters(){
 		return registers;
 	}
 
-	public static int getA(){
+	public int getA(){
 		return a;
 	}
 
-	public static int getIr(){
+	public int getIr(){
 		return ir;
 	}
 
-	public static int getOf(){
+	public int getOf(){
 		return of;
 	}
 
-	public static int getNf(){
+	public int getNf(){
 		return nf;
 	}
 
-	public static int getZf(){
+	public int getZf(){
 		return zf;
 	}
 
-	public static int getMar(){
+	public int getMar(){
 		return mar;
 	}
 
-	public static int getMbr(){
+	public int getMbr(){
 		return mbr;
 	}
 
-	public static void setRegisters(HashMap<String, Integer> newValues){
+	public void setRegisters(HashMap<String, Integer> newValues){
 		registers = newValues;
 	}
 
-	public static void setA(int newA){
+	public void setA(int newA){
 		a = newA;
 	}
 
-	public static void setIr(int newIr){
+	public void setIr(int newIr){
 		ir = newIr;
 	}
 
-	public static void setOf(int newOf){
+	public void setOf(int newOf){
 		of = newOf;
 	}
 
-	public static void setNf(int newNf){
+	public void setNf(int newNf){
 		nf = newNf;
 	}
 
-	public static void setZf(int newZf){
+	public void setZf(int newZf){
 		zf = newZf;
 	}
 
-	public static void setMar(int newMar){
+	public void setMar(int newMar){
 		mar = newMar;
 	}
 
-	public static void setMbr(int newMbr){
+	public void setMbr(int newMbr){
 		mbr = newMbr;
+	}
+
+	public void setReg(String key, int val){
+		System.out.println("ayy " + key + " " + val);
+		registers.put(key, val);
+		System.out.println("Reg: " + registers.entrySet());
 	}
 }
