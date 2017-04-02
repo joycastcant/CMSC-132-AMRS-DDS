@@ -20,4 +20,8 @@ public class Instruction{
 	public String getOp2(){
 		return this.op2;
 	}
+
+	public String getInstruction(){
+		return operation + " " + op1 + " " + op2;
+	}
 }
