@@ -16,6 +16,8 @@ public class Decode {
 		String op2 = value.getOp2();
 		int oP2 = Integer.valueOf(op2);
 
+		System.out.println(value.getInstruction());
+
 		if (operand.equals("LOAD")){
 			execute.load(op1, oP2);
 		}
