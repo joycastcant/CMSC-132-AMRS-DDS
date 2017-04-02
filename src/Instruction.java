@@ -1,10 +1,7 @@
-import java.util.*;
-import java.io.*;
-
-public class Instruction {
-	public String operation;
-	public String op1;
-	public String op2;
+public class Instruction{
+	private String operation;
+	private String op1;
+	private String op2;
 
 	public Instruction(String[] inst){
 		this.operation = inst[0];
