@@ -14,9 +14,10 @@ public class Decode {
 		String operand = value.getOperation();
 		String op1 = value.getOp1();
 		String op2 = value.getOp2();
+		int oP2 = Integer.valueOf(op2);
 
 		if (operand.equals("LOAD")){
-			execute.load(op1, op2);
+			execute.load(op1, oP2);
 		}
 
 		if (operand.equals("ADD")){
