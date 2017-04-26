@@ -8,6 +8,8 @@ public class Fetch {
 		System.out.println("Fetching the data...");
 		this.instructions = instructions;
 		this.occupied = occupied;
+		msc.setMar(msc.getPC());
+		msc.setMbr(instructions.get(msc.getMar()));
 		msc.incrementPC();
 		Decode decode = new Decode(instructions, ir, msc);
 	}

@@ -9,7 +9,7 @@ public class MSC {
 	private int zf;
 	private int pc;
 	private int mar;
-	private int mbr;
+	private Instruction mbr;
 
 	public MSC(){
 		pc = 0;
@@ -55,7 +55,7 @@ public class MSC {
 		return mar;
 	}
 
-	public int getMbr(){
+	public Instruction getMbr(){
 		return mbr;
 	}
 
@@ -87,7 +87,7 @@ public class MSC {
 		mar = newMar;
 	}
 
-	public void setMbr(int newMbr){
+	public void setMbr(Instruction newMbr){
 		mbr = newMbr;
 	}
 
