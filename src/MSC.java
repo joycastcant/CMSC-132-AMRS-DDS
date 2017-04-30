@@ -1,99 +1,99 @@
 import java.util.HashMap;
 
 public class MSC {
-	private HashMap<String, Integer> registers;
-	private int a;
-	private int ir;
-	private int of;
-	private int nf;
-	private int zf;
-	private int pc;
-	private int mar;
-	private Instruction mbr;
+	private static HashMap<String, Integer> registers;
+	private static int a;
+	private static int ir;
+	private static int of;
+	private static int nf;
+	private static int zf;
+	private static int pc;
+	private static int mar;
+	private static Instruction mbr;
 
 	public MSC(){
-		pc = 0;
+		pc = 1000;
 		registers = new HashMap<String, Integer>();
 		for (int i = 1; i < 33; i++){
 			registers.put("R"+i, 0);
 		}
 	}
 
-	public void incrementPC(){
+	public static void incrementPC(){
 		pc++;
 	}
 
-	public int getPC(){
+	public static int getPC(){
 		return pc;
 	}
 
-	public HashMap<String, Integer> getRegisters(){
+	public static HashMap<String, Integer> getRegisters(){
 		return registers;
 	}
 
-	public int getA(){
+	public static int getA(){
 		return a;
 	}
 
-	public int getIr(){
+	public static int getIr(){
 		return ir;
 	}
 
-	public int getOf(){
+	public static int getOf(){
 		return of;
 	}
 
-	public int getNf(){
+	public static int getNf(){
 		return nf;
 	}
 
-	public int getZf(){
+	public static int getZf(){
 		return zf;
 	}
 
-	public int getMar(){
+	public static int getMar(){
 		return mar;
 	}
 
-	public Instruction getMbr(){
+	public static Instruction getMbr(){
 		return mbr;
 	}
 
-	public void setRegisters(HashMap<String, Integer> newValues){
+	public static void setRegisters(HashMap<String, Integer> newValues){
 		registers = newValues;
 	}
 
-	public void setA(int newA){
+	public static void setA(int newA){
 		a = newA;
 	}
 
-	public void setIr(int newIr){
+	public static void setIr(int newIr){
 		ir = newIr;
 	}
 
-	public void setOf(int newOf){
+	public static void setOf(int newOf){
 		of = newOf;
 	}
 
-	public void setNf(int newNf){
+	public static void setNf(int newNf){
 		nf = newNf;
 	}
 
-	public void setZf(int newZf){
+	public static void setZf(int newZf){
 		zf = newZf;
 	}
 
-	public void setMar(int newMar){
+	public static void setMar(int newMar){
 		mar = newMar;
 	}
 
-	public void setMbr(Instruction newMbr){
+	public static void setMbr(Instruction newMbr){
 		mbr = newMbr;
 	}
 
-	public void setReg(String key, int val){
-		System.out.println("ayy " + key + " " + val);
+	public static void setReg(String key, int val){
+		//System.out.println("ayy " + key + " " + val);
 		registers.put(key, val);
-		System.out.println("Reg: " + registers.entrySet());
+		//System.out.println("Reg: " + registers.entrySet());
 	}
 }
