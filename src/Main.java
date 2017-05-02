@@ -10,7 +10,9 @@ public class Main {
 	public static Execute execute;
 	
 	public static void main (String[] args){
+		Boolean hazard = false;
 		Parser parser = new Parser();
+		int temp = 0;
 		//MSC msc = new MSC(); OLD
 		instructions = parser.instructions;
 		fetch = new Fetch(instructions, msc);
@@ -21,7 +23,6 @@ public class Main {
 		do{
 			System.out.println("=============== time "+count+" =============");count++;
 			
-			
 			if(execute.isOccupied()) {
 				// transfer and execute
 				execute.free();
@@ -30,12 +31,31 @@ public class Main {
 				decode.free();
 			}
 			if(fetch.isOccupied()) {
-				fetch.free();
+				fetch.free(hazard);
 			}
-			fetch.fetchInstruction();
+
+			int next = fetch.fetchInstruction();
+
+			if(next-1 > 1000 && instructions.containsKey(next)){
+				hazard = parser.detectHazard(instructions.get(next-1),instructions.get(next));
+				temp = next;
+			}
+
+			if(hazard == true){
+				System.out.println("Stall");
+			}
+
 			decode.getValues();
-			execute.performOperation();
-			
+
+			int a = execute.performOperation();
+			if(a == -1 && hazard == true){
+				hazard = false;
+				decode.setIr(temp);
+				msc.setMbr(instructions.get(temp));
+				decode.occupy();
+				decode.getValues();
+			}
+
 			System.out.println("Fetch is occupied: "+fetch.isOccupied()+" ir="+fetch.ir);
 			System.out.println("Decode is occupied: "+decode.isOccupied()+" ir="+decode.ir);
 			System.out.println("Execute is occupied: "+execute.isOccupied()+" ir="+execute.ir);

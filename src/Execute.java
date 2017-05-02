@@ -24,7 +24,7 @@ public class Execute{
 		
 	}
 	
-	public static void performOperation() {
+	public static int performOperation() {
 		if(ir!=-1) {
 			System.out.println("executing "+ir);
 			if (operand.equals("LOAD")){
@@ -46,6 +46,8 @@ public class Execute{
 			
 			//occupied = true;
 		}
+
+		return ir;
 	}
 	
 	public static void occupy() {

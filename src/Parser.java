@@ -53,15 +53,15 @@ public class Parser {
 		System.out.println(instB);
 
 		if(op2A.equals(op1B)){
-			System.out.println("Data Hazard: Write after Read (WAR) on " + instA + " and " + instB + ".");
+			//System.out.println("Data Hazard: Write after Read (WAR) on " + instA + " and " + instB + ".");
 			return true;
 		}
 		else if(op1A.equals(op1B)){
-			System.out.println("Data Hazard: Write after Write (WAW) on " + instA + " and " + instB + ".");
+			//System.out.println("Data Hazard: Write after Write (WAW) on " + instA + " and " + instB + ".");
 			return true;
 		}
 		else if(op1A.equals(op2B)){
-			System.out.println("Data Hazard: Read after Write (RAW) on " + instA + " and " + instB + ".");
+			//System.out.println("Data Hazard: Read after Write (RAW) on " + instA + " and " + instB + ".");
 			return true;
 		}
 

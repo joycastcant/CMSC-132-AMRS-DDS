@@ -22,7 +22,7 @@ public class Fetch {
 		this.msc = msc;
 	}
 	
-	public static void fetchInstruction() {
+	public static int fetchInstruction() {
 		
 		msc.setMar(msc.getPC());
 		ir = msc.getPC();
@@ -34,6 +34,7 @@ public class Fetch {
 			msc.incrementPC();
 			occupied = true;
 		}
+		return ir;
 		//} catch(ArrayIndexOutOfBoundsException ee) {System.out.println("Out of bounds");}
 		
 		//Main.decode.getValues(ir);
@@ -44,11 +45,16 @@ public class Fetch {
 		occupied = true;
 	}
 	
-	public static void free() {
-		Main.decode.setIr(ir);
-		Main.decode.occupy();
-		ir = -1;
-		occupied = false;
+	public static void free(Boolean hazard) {
+		if(hazard == true){
+			Main.decode.setIr(-1);	
+		}
+		else{
+			Main.decode.setIr(ir);
+			Main.decode.occupy();
+			ir = -1;
+			occupied = false;
+		}
 	}
 	
 	public static boolean isOccupied() {

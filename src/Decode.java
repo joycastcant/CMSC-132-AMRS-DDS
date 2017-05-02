@@ -11,7 +11,7 @@ public class Decode {
 		this.msc = msc;
 	}
 	
-	public static void getValues() {
+	public static int getValues() {
 		if(ir!=-1) {
 			System.out.println("decoding "+ir);
 			Instruction value = msc.getMbr();
@@ -20,10 +20,9 @@ public class Decode {
 				Main.execute.setOperand(value.getOperation());
 				Main.execute.setOp1(value.getOp1());
 				Main.execute.setOp2(value.getOp2());
-				//performOperation(operand, op1, op2);
-				//occupied = true;
 			} catch(NullPointerException ee) {}
 		}
+		return ir;
 		//Main.execute.performOperation(operand, op1, op2, ir);
 	}
 	
