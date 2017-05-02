@@ -32,7 +32,7 @@ public class Parser {
 				if(addr < address-1){
 					Instruction a = instructions.get(addr);
 					Instruction b = instructions.get(addr + 1);
-					detectHazard(a,b);
+					Boolean bool = detectHazard(a,b);
 				}
 			}
 
@@ -41,7 +41,7 @@ public class Parser {
 		}
 	}
 
-	public static void detectHazard(Instruction a, Instruction b){
+	public static boolean detectHazard(Instruction a, Instruction b){
 		String op1A = a.getOp1();
 		String op2A = a.getOp2();
 		String op1B = b.getOp1();
@@ -54,12 +54,17 @@ public class Parser {
 
 		if(op2A.equals(op1B)){
 			System.out.println("Data Hazard: Write after Read (WAR) on " + instA + " and " + instB + ".");
+			return true;
 		}
 		else if(op1A.equals(op1B)){
 			System.out.println("Data Hazard: Write after Write (WAW) on " + instA + " and " + instB + ".");
+			return true;
 		}
 		else if(op1A.equals(op2B)){
 			System.out.println("Data Hazard: Read after Write (RAW) on " + instA + " and " + instB + ".");
+			return true;
 		}
+
+		return false;
 	}
 }
