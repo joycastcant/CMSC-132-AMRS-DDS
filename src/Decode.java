@@ -6,6 +6,7 @@ public class Decode {
 	private static  HashMap<String, Integer> reg;
 	public static int ir = -1;
 	public static boolean occupied = false;
+	public static Instruction value;
 	
 	public Decode(HashMap<Integer, Instruction> instructions, MSC msc){
 		this.instructions = instructions;
@@ -14,29 +15,7 @@ public class Decode {
 	}
 	
 	public static void getValues() {
-		if(ir!=-1) {
-			System.out.println("decoding "+ir);
-			Instruction value = msc.getMbr();
-			try{
-				System.out.println("op1: " + value.getOp1());
-				System.out.println("op: " + value.getOperation());
-				System.out.println("op2: " + value.getOp2());
-				System.out.println(" *** ");
-				System.out.println(reg);
-				System.out.println("op1: " + reg.get(value.getOp1()));
-				System.out.println("op: " + value.getOperation());
-				System.out.println("op2: " + reg.get(value.getOp2()));
-				Main.execute.setOperand(value.getOperation());
-				Main.execute.setOp1(reg.get(value.getOp1()));
-				if(value.getOperation().equals("LOAD"))
-					Main.execute.setOp2(Integer.valueOf(value.getOp2()));
-				else
-					Main.execute.setOp2(reg.get(value.getOp2()));
-				//performOperation(operand, op1, op2);
-				//occupied = true;
-			} catch(NullPointerException ee) {}
-		}
-		//Main.execute.performOperation(operand, op1, op2, ir);
+		if(ir!=-1) System.out.println("decoding "+ir);
 	}
 	
 	public static void occupy() {
@@ -47,6 +26,14 @@ public class Decode {
 		//if(occupied) System.out.println("yes");
 		Main.execute.setIr(ir);
 		Main.execute.occupy();
+		Main.execute.setDest(value.getOp1());
+		Main.execute.setOperand(value.getOperation());
+		Main.execute.setOp1(reg.get(value.getOp1()));
+
+		if(value.getOperation().equals("LOAD"))
+			Main.execute.setOp2(Integer.valueOf(value.getOp2()));
+		else
+			Main.execute.setOp2(reg.get(value.getOp2()));
 		setIr(-1);
 		occupied = false;
 	}
@@ -57,6 +44,10 @@ public class Decode {
 	
 	public static boolean isOccupied() {
 		return occupied;
+	}
+
+	public static void setValue(Instruction val){
+		value = val;
 	}
 	
 	/* OLD

@@ -23,6 +23,7 @@ public class WriteBack {
 		if(ir!=-1) {
 			System.out.println("write back by "+ir);
 			msc.setReg(dest, val);
+			System.out.println(reg);
 		}
 	}
 	
@@ -39,4 +40,11 @@ public class WriteBack {
 		return occupied;
 	}
 	
+	public static void setDest(String destination){
+		dest = destination;
+	}
+
+	public static void setVal(int value){
+		val = value;
+	}
 }

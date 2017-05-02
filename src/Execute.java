@@ -3,6 +3,7 @@ import java.util.HashMap;
 public class Execute{
 	public static HashMap<Integer, Instruction> instructions;
 	public static MSC msc;
+	public static String dest;
 	public static String operand;
 	public static int op1;
 	public static int op2;
@@ -24,6 +25,7 @@ public class Execute{
 	public static void performOperation() {
 		if(ir!=-1) {
 			System.out.println("executing "+ir);
+
 			switch(operand){
 				case "LOAD":
 					load(op2);
@@ -53,6 +55,9 @@ public class Execute{
 	public static void free() {
 		Main.ma.setIr(ir);
 		Main.ma.occupy();
+		Main.ma.setDest(dest);
+		Main.ma.setVal(result);
+		System.out.println("d: " + dest + " r: " + result);
 		setIr(-1);
 		operand = "";
 		op1 = 0;
@@ -73,7 +78,6 @@ public class Execute{
 		msc.setZf(0);
 		msc.setNf(0);
 		result = op2;
-		System.out.println("halu " + result);
 		if(result > 9) msc.setOf(1);
 	}
 
@@ -82,7 +86,7 @@ public class Execute{
 		msc.setZf(0);
 		msc.setNf(0);
 		result = op1 + op2;
-		System.out.println("halu " + result);
+		System.out.println(op1 + " + " + op2);
 		if(result > 9) msc.setOf(1);
 	}
 
@@ -91,7 +95,7 @@ public class Execute{
 		msc.setZf(0);
 		msc.setNf(0);
 		result = op1 - op2;
-		System.out.println("halu " + result);
+		System.out.println(op1 + " - " + op2);
 		if(result > 9) msc.setOf(1);
 	}
 
@@ -100,8 +104,7 @@ public class Execute{
 		msc.setZf(0);
 		msc.setNf(0);
 		result = op1 - op2;
-		System.out.println("halu " + result);
-
+		System.out.println(op1 + " vs " + op2);
 		if(result == 0) msc.setZf(1);
 		else if(result < 1) msc.setNf(1);
 	}
@@ -109,10 +112,16 @@ public class Execute{
 	public static void setOperand(String opr) {
 		operand = opr;
 	}
+
 	public static void setOp1(int x) {
 		op1 = x;
 	}
+
 	public static void setOp2(int y) {
 		op2 = y;
+	}
+
+	public static void setDest(String destination) {
+		dest = destination;
 	}
 }

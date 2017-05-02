@@ -47,6 +47,7 @@ public class Fetch {
 	public static void free() {
 		Main.decode.setIr(ir);
 		Main.decode.occupy();
+		Main.decode.setValue(msc.getMbr());
 		ir = -1;
 		occupied = false;
 	}

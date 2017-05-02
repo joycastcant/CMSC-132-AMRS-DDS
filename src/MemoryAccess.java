@@ -22,6 +22,8 @@ public class MemoryAccess {
 	public static void free() {
 		Main.wb.setIr(ir);
 		Main.wb.occupy();
+		Main.wb.setDest(dest);
+		Main.wb.setVal(val);
 		setIr(-1);
 		occupied = false;
 	}
@@ -37,5 +39,12 @@ public class MemoryAccess {
 	public static boolean isOccupied() {
 		return occupied;
 	}
-	
+
+	public static void setDest(String destination){
+		dest = destination;
+	}
+
+	public static void setVal(int value){
+		val = value;
+	}	
 }
