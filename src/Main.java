@@ -20,9 +20,7 @@ public class Main {
 		
 		do{
 			System.out.println("=============== time "+count+" =============");count++;
-			System.out.println("Fetch is occupied: "+fetch.isOccupied()+" ir="+fetch.ir);
-			System.out.println("Decode is occupied: "+decode.isOccupied()+" ir="+decode.ir);
-			System.out.println("Execute is occupied: "+execute.isOccupied()+" ir="+execute.ir);
+			
 			
 			if(execute.isOccupied()) {
 				// transfer and execute
@@ -34,20 +32,20 @@ public class Main {
 			if(fetch.isOccupied()) {
 				fetch.free();
 			}
-			
 			fetch.fetchInstruction();
 			decode.getValues();
 			execute.performOperation();
 			
-			try{
-				Thread.sleep(1000);
-			} catch(Exception ee) {}
-		} while(fetch.isOccupied() || decode.isOccupied() || execute.isOccupied());
-		
-		System.out.println("=============== time "+count+" =============");count++;
 			System.out.println("Fetch is occupied: "+fetch.isOccupied()+" ir="+fetch.ir);
 			System.out.println("Decode is occupied: "+decode.isOccupied()+" ir="+decode.ir);
 			System.out.println("Execute is occupied: "+execute.isOccupied()+" ir="+execute.ir);
+			
+			try{
+				Thread.sleep(1000);
+			} catch(Exception ee) {}
+			
+			if(!fetch.isOccupied() && !decode.isOccupied() && execute.isOccupied()) execute.free();
+		} while(fetch.isOccupied() || decode.isOccupied() || execute.isOccupied());
 		
 		/*
 		for(Entry e : instructions.entrySet()){

@@ -16,18 +16,25 @@ public class Decode {
 			System.out.println("decoding "+ir);
 			Instruction value = msc.getMbr();
 			try{
+				//System.out.println(" *** ");
 				Main.execute.setOperand(value.getOperation());
 				Main.execute.setOp1(value.getOp1());
 				Main.execute.setOp2(value.getOp2());
 				//performOperation(operand, op1, op2);
-				occupied = true;
+				//occupied = true;
 			} catch(NullPointerException ee) {}
 		}
 		//Main.execute.performOperation(operand, op1, op2, ir);
 	}
 	
+	public static void occupy() {
+		occupied = true;
+	}
+	
 	public static void free() {
+		//if(occupied) System.out.println("yes");
 		Main.execute.setIr(ir);
+		Main.execute.occupy();
 		setIr(-1);
 		occupied = false;
 	}
