@@ -51,6 +51,8 @@ public class Execute{
 	}
 	
 	public static void free() {
+		Main.ma.setIr(ir);
+		Main.ma.occupy();
 		setIr(-1);
 		operand = "";
 		op1 = 0;
