@@ -26,10 +26,11 @@ public class Fetch {
 		
 		msc.setMar(msc.getPC());
 		ir = msc.getPC();
-		System.out.println("fetching "+ir);
+		
 		//try {
 		msc.setMbr(instructions.get(msc.getMar()));
 		if(msc.getMbr()!=null) {
+			System.out.println("fetching "+ir);
 			msc.incrementPC();
 			occupied = true;
 		}
@@ -39,8 +40,13 @@ public class Fetch {
 		//Decode decode = new Decode(instructions, ir, msc);
 	}
 	
+	public static void occupy() {
+		occupied = true;
+	}
+	
 	public static void free() {
 		Main.decode.setIr(ir);
+		Main.decode.occupy();
 		ir = -1;
 		occupied = false;
 	}

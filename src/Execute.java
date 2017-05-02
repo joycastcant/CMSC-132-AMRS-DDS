@@ -44,8 +44,12 @@ public class Execute{
 				cmp(op1, op2);
 			}
 			
-			occupied = true;
+			//occupied = true;
 		}
+	}
+	
+	public static void occupy() {
+		occupied = true;
 	}
 	
 	public static void free() {
