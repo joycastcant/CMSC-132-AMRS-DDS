@@ -36,9 +36,9 @@ public class Main {
 			decode.getValues();
 			execute.performOperation();
 			
-			System.out.println("Fetch is occupied: "+fetch.isOccupied()+" ir="+fetch.ir);
+			/*System.out.println("Fetch is occupied: "+fetch.isOccupied()+" ir="+fetch.ir);
 			System.out.println("Decode is occupied: "+decode.isOccupied()+" ir="+decode.ir);
-			System.out.println("Execute is occupied: "+execute.isOccupied()+" ir="+execute.ir);
+			System.out.println("Execute is occupied: "+execute.isOccupied()+" ir="+execute.ir);*/
 			
 			try{
 				Thread.sleep(1000);
