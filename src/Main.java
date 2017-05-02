@@ -8,6 +8,8 @@ public class Main {
 	public static Fetch fetch;
 	public static Decode decode;
 	public static Execute execute;
+	public static MemoryAccess ma;
+	public static WriteBack wb;
 	
 	public static void main (String[] args){
 		Boolean hazard = false;
@@ -18,11 +20,19 @@ public class Main {
 		fetch = new Fetch(instructions, msc);
 		decode = new Decode(instructions, msc);
 		execute = new Execute(instructions, msc);
+		ma = new MemoryAccess(instructions, msc);
+		wb = new WriteBack(instructions, msc);
 		int count=1;
 		
 		do{
 			System.out.println("=============== time "+count+" =============");count++;
 			
+			if(wb.isOccupied()) {
+				wb.free();
+			}
+			if(ma.isOccupied()) {
+				ma.free();
+			}
 			if(execute.isOccupied()) {
 				// transfer and execute
 				execute.free();
@@ -46,8 +56,10 @@ public class Main {
 			}
 
 			decode.getValues();
-
-			int a = execute.performOperation();
+			execute.performOperation();
+			ma.accessMem();
+			int a = wb.write();
+			execute.performOperation();
 			if(a == -1 && hazard == true){
 				hazard = false;
 				decode.setIr(temp);
@@ -59,13 +71,15 @@ public class Main {
 			System.out.println("Fetch is occupied: "+fetch.isOccupied()+" ir="+fetch.ir);
 			System.out.println("Decode is occupied: "+decode.isOccupied()+" ir="+decode.ir);
 			System.out.println("Execute is occupied: "+execute.isOccupied()+" ir="+execute.ir);
+			System.out.println("MemAccess is occupied: "+ma.isOccupied()+" ir="+ma.ir);
+			System.out.println("WBack is occupied: "+wb.isOccupied()+" ir="+wb.ir);
 			
 			try{
 				Thread.sleep(1000);
 			} catch(Exception ee) {}
 			
-			if(!fetch.isOccupied() && !decode.isOccupied() && execute.isOccupied()) execute.free();
-		} while(fetch.isOccupied() || decode.isOccupied() || execute.isOccupied());
+			if(!fetch.isOccupied() && !decode.isOccupied() && !execute.isOccupied() && !ma.isOccupied() && wb.isOccupied()) wb.free();
+		} while(fetch.isOccupied() || decode.isOccupied() || execute.isOccupied() || ma.isOccupied() || wb.isOccupied());
 		
 		/*
 		for(Entry e : instructions.entrySet()){

@@ -44,7 +44,7 @@ public class Fetch {
 	public static void occupy() {
 		occupied = true;
 	}
-	
+
 	public static void free(Boolean hazard) {
 		if(hazard == true){
 			Main.decode.setIr(-1);	
@@ -52,6 +52,7 @@ public class Fetch {
 		else{
 			Main.decode.setIr(ir);
 			Main.decode.occupy();
+			Main.decode.setValue(msc.getMbr());
 			ir = -1;
 			occupied = false;
 		}
