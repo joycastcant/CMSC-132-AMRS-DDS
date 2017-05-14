@@ -32,7 +32,7 @@ public class Parser {
 				if(addr < address-1){
 					Instruction a = instructions.get(addr);
 					Instruction b = instructions.get(addr + 1);
-					Boolean bool = detectHazard(a,b);
+					//Boolean bool = detectHazard(a,b,addr);
 				}
 			}
 
@@ -41,7 +41,7 @@ public class Parser {
 		}
 	}
 
-	public static boolean detectHazard(Instruction a, Instruction b){
+	public static boolean detectHazard(Instruction a, Instruction b, int next){
 		String op1A = a.getOp1();
 		String op2A = a.getOp2();
 		String op1B = b.getOp1();
@@ -53,16 +53,37 @@ public class Parser {
 		System.out.println(instB);
 
 		if(op2A.equals(op1B)){
-			//System.out.println("Data Hazard: Write after Read (WAR) on " + instA + " and " + instB + ".");
+			System.out.println("Data Hazard: Write after Read (WAR) on " + instA + " and " + instB + ".");
 			return true;
 		}
 		else if(op1A.equals(op1B)){
-			//System.out.println("Data Hazard: Write after Write (WAW) on " + instA + " and " + instB + ".");
+			System.out.println("Data Hazard: Write after Write (WAW) on " + instA + " and " + instB + ".");
 			return true;
 		}
-		else if(op1A.equals(op2B)){
+		else if(detectRAW(b, next)){
 			//System.out.println("Data Hazard: Read after Write (RAW) on " + instA + " and " + instB + ".");
 			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean detectRAW(Instruction instB, int size){
+		int flag = 0;
+	
+		for (int i = size-1; i > 999; i--){
+			Instruction instA = instructions.get(i);
+
+			String op1 = instA.getOp1();
+			String op2 = instB.getOp2();
+			if (op1.equals(op2) && flag < 3){
+				String a = instA.getOperation() + " " + instA.getOp1() + " " + instA.getOp2();
+				String b = instB.getOperation() + " " + instB.getOp1() + " " + instB.getOp2();
+				System.out.println("Data Hazard: Read after Write (RAW) on " + a + " and " + b + ".");
+				return true;
+			}
+			flag++;
+			
 		}
 
 		return false;

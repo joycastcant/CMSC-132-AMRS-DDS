@@ -25,7 +25,7 @@ public class Main {
 		int count=1;
 		
 		do{
-			System.out.println("=============== time "+count+" =============");count++;
+			System.out.println("\n\n============================ TIME "+count+" ============================\n\n");count++;
 			
 			if(wb.isOccupied()) {
 				wb.free();
@@ -47,7 +47,8 @@ public class Main {
 			int next = fetch.fetchInstruction();
 
 			if(next-1 > 1000 && instructions.containsKey(next)){
-				hazard = parser.detectHazard(instructions.get(next-1),instructions.get(next));
+				hazard = parser.detectHazard(instructions.get(next-1),instructions.get(next), next);
+				System.out.println(hazard);
 				temp = next;
 			}
 
