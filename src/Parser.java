@@ -30,9 +30,9 @@ public class Parser {
 			Set<Integer> keys = instructions.keySet();
 			for(Integer addr : keys){
 				if(addr < address-1){
-					Instruction a = instructions.get(addr);
-					Instruction b = instructions.get(addr + 1);
-					//Boolean bool = detectHazard(a,b,addr);
+					Instruction prev = instructions.get(addr);
+					Instruction current = instructions.get(addr + 1);
+					//Boolean bool = detectHazard(prev,current,addr);
 				}
 			}
 
@@ -41,16 +41,20 @@ public class Parser {
 		}
 	}
 
-	public static boolean detectHazard(Instruction a, Instruction b, int next){
-		String op1A = a.getOp1();
-		String op2A = a.getOp2();
-		String op1B = b.getOp1();
-		String op2B = b.getOp2();
+	public static boolean detectHazard(Instruction prev, Instruction current){
+		String op1A = prev.getOp1();
+		String op2A = prev.getOp2();
+		String op1B = current.getOp1();
+		String op2B = current.getOp2();
 
-		String instA = a.getOperation() + " " + op1A + " " + op2A;
-		String instB = b.getOperation() + " " + op1B + " " + op2B;
+		String instA = prev.getOperation() + " " + op1A + " " + op2A;
+		String instB = current.getOperation() + " " + op1B + " " + op2B;
 		System.out.println(instA);
 		System.out.println(instB);
+
+		if (current.getOperation().equals("CMP")){
+			return false;
+		}
 
 		if(op2A.equals(op1B)){
 			System.out.println("Data Hazard: Write after Read (WAR) on " + instA + " and " + instB + ".");
@@ -60,15 +64,15 @@ public class Parser {
 			System.out.println("Data Hazard: Write after Write (WAW) on " + instA + " and " + instB + ".");
 			return true;
 		}
-		else if(detectRAW(b, next)){
-			//System.out.println("Data Hazard: Read after Write (RAW) on " + instA + " and " + instB + ".");
+		else if(op1A.equals(op2B)){
+			System.out.println("Data Hazard: Read after Write (RAW) on " + instA + " and " + instB + ".");
 			return true;
 		}
 
 		return false;
 	}
 
-	public static boolean detectRAW(Instruction instB, int size){
+/*	public static boolean detectRAW(Instruction instB, int size){
 		int flag = 0;
 	
 		for (int i = size-1; i > 999; i--){
@@ -77,9 +81,9 @@ public class Parser {
 			String op1 = instA.getOp1();
 			String op2 = instB.getOp2();
 			if (op1.equals(op2) && flag < 3){
-				String a = instA.getOperation() + " " + instA.getOp1() + " " + instA.getOp2();
-				String b = instB.getOperation() + " " + instB.getOp1() + " " + instB.getOp2();
-				System.out.println("Data Hazard: Read after Write (RAW) on " + a + " and " + b + ".");
+				String prev = instA.getOperation() + " " + instA.getOp1() + " " + instA.getOp2();
+				String current = instB.getOperation() + " " + instB.getOp1() + " " + instB.getOp2();
+				System.out.println("Data Hazard: Read after Write (RAW) on " + prev + " and " + current + ".");
 				return true;
 			}
 			flag++;
@@ -87,5 +91,26 @@ public class Parser {
 		}
 
 		return false;
+	}*/
+
+    public static int detect(int address){
+		int size = instructions.size();
+    	int max_address = (1000+size) - 1;
+    	boolean  haz = false;
+    	int addr = 0;
+
+		Instruction inst = instructions.get(address);
+
+		int j = address-1, flag = 1;
+		while (j >= 1000 && flag != 5 && j < max_address){
+			if (detectHazard(instructions.get(j), inst)){
+				return j;
+			}
+			j--;
+			flag++;
+		}
+
+    	return addr;
 	}
+
 }

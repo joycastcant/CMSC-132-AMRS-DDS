@@ -12,7 +12,7 @@ public class Main {
 	public static WriteBack wb;
 	
 	public static void main (String[] args){
-		Boolean hazard = false;
+		boolean hazard = false;
 		Parser parser = new Parser();
 		int temp = 0;
 		//MSC msc = new MSC(); OLD
@@ -44,29 +44,36 @@ public class Main {
 				fetch.free(hazard);
 			}
 
-			int next = fetch.fetchInstruction();
-
-			if(next-1 > 1000 && instructions.containsKey(next)){
-				hazard = parser.detectHazard(instructions.get(next-1),instructions.get(next), next);
-				System.out.println(hazard);
-				temp = next;
+			int addr = fetch.fetchInstruction();
+			int dependency = parser.detect(addr);
+			if(dependency > 0){
+				while(decode.ir == dependency || execute.ir == dependency || ma.ir == dependency || wb.ir == dependency){
+					System.out.println("Staaaaaaaaaaaalllllllllllll");
+					if(wb.isOccupied()) {
+						wb.free();
+					}
+					if(ma.isOccupied()) {
+						ma.free();
+					}
+					if(execute.isOccupied()) {
+						// transfer and execute
+						execute.free();
+					}
+					if(decode.isOccupied()) {
+						decode.free();
+					}
+					decode.getValues();
+					execute.performOperation();
+					ma.accessMem();
+					wb.write();
+					count++;
+				}
 			}
-
-			if(hazard == true){
-				System.out.println("Stall");
-			}
-
-			decode.getValues();
-			execute.performOperation();
-			ma.accessMem();
-			int a = wb.write();
-			execute.performOperation();
-			if(a == -1 && hazard == true){
-				hazard = false;
-				decode.setIr(temp);
-				msc.setMbr(instructions.get(temp));
-				decode.occupy();
+			else{
 				decode.getValues();
+				execute.performOperation();
+				ma.accessMem();
+				wb.write();
 			}
 
 			System.out.println("Fetch is occupied: "+fetch.isOccupied()+" ir="+fetch.ir);
