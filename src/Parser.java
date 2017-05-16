@@ -52,15 +52,14 @@ public class Parser {
 		System.out.println(instA);
 		System.out.println(instB);
 
-		if (current.getOperation().equals("CMP")){
-			return false;
-		}
 
 		if(op2A.equals(op1B)){
+			if (current.getOperation().equals("CMP")) return false;
 			System.out.println("Data Hazard: Write after Read (WAR) on " + instA + " and " + instB + ".");
 			return true;
 		}
 		else if(op1A.equals(op1B)){
+			if (current.getOperation().equals("CMP")) return false;
 			System.out.println("Data Hazard: Write after Write (WAW) on " + instA + " and " + instB + ".");
 			return true;
 		}
