@@ -16,6 +16,10 @@ public class Main {
 		Parser parser = new Parser();
 		int temp = 0;
 		//MSC msc = new MSC(); OLD
+
+		if(!parser.valid)
+			return;
+
 		instructions = parser.instructions;
 		fetch = new Fetch(instructions, msc);
 		decode = new Decode(instructions, msc);

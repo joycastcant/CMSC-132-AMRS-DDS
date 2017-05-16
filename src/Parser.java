@@ -5,10 +5,10 @@ import java.io.BufferedReader;
 
 public class Parser {
 	public static HashMap<Integer, Instruction> instructions;
+	public static boolean valid;
 
 	public Parser(){
 		instructions = new HashMap<Integer, Instruction>();
-		
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("../files/input.txt"));
 			String pattern = "";
@@ -17,8 +17,8 @@ public class Parser {
 			int address = 1000;
 
 			line = reader.readLine();
-			while(line != null){
-				line = line.toUpperCase();
+			for(int i=1; line != null && checkSyntax(line, i); i++){
+				line = line.toUpperCase();	
 				String[] lineArray = line.split(" ");
 				Instruction newInst = new Instruction(lineArray);
 
@@ -26,6 +26,11 @@ public class Parser {
 				address++;
 				line = reader.readLine();
 			}
+			
+			if(line != null)
+				valid = false;
+			else
+				valid = true;
 
 			Set<Integer> keys = instructions.keySet();
 			for(Integer addr : keys){
@@ -37,7 +42,7 @@ public class Parser {
 			}
 
 		} catch (Exception e){
-			System.out.println(e.getMessage());
+			System.out.println("Error: " + e.getMessage());
 		}
 	}
 
@@ -110,6 +115,47 @@ public class Parser {
 		}
 
     	return addr;
+	}
+
+	public static boolean checkSyntax(String line, int lineNum){
+		boolean check;
+		String[] arr = line.split(" ");
+
+		if(arr.length < 3) check = false;
+		else{
+			if(arr[0].equals("LOAD")){
+				int immed = Integer.valueOf(arr[2]);
+				if(!isReg(arr[1]))
+					check = false;
+				else if(immed < -99 || immed > 99)
+					check = false;
+				else check = true;
+			}else if(arr[0].equals("ADD") || arr[0].equals("SUB") || arr[0].equals("CMP")){
+				if(!isReg(arr[1]) || !isReg(arr[2]))
+					check = false;
+				else check = true;
+			}else check = false;
+		}
+
+		if(!check) System.out.println("Syntax error in line " + lineNum);
+
+		return check;
+	}
+
+	public static boolean isReg(String reg){
+		int len = reg.length();
+
+		if(len <= 1)
+			return false;
+
+		int num = Integer.valueOf(reg.substring(1,len));
+		if(!reg.substring(0,1).equals("R"))
+			return false;
+		
+		if(num < 1 || num > 32)
+			return false;
+
+		return true;
 	}
 
 }
