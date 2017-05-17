@@ -32,7 +32,6 @@ public class Fetch {
 		}
 	}
 	
-	
 	public static void occupy() {
 		occupied = true;
 	}

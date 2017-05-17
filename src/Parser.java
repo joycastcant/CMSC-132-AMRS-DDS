@@ -17,9 +17,7 @@ public class Parser {
 			String regex = "";
 			String line;
 			int address = 1000;
-			
-			
-			
+
 			line = reader.readLine();
 			for(int i=1; line != null && checkSyntax(line, i); i++){
 				line = line.toUpperCase();
@@ -40,11 +38,9 @@ public class Parser {
 
 			Set<Integer> keys = instructions.keySet();
 			for(Integer addr : keys){
-				// if(addr < address-1){
 					Instruction a = instructions.get(addr);
 					String haza = detect(addr);
 					UI.hazmodel.addRow(new Object[]{a.getInstruction(), haza});
-				// }
 			}
 
 		} catch (Exception e){

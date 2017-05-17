@@ -25,7 +25,6 @@ public class Decode {
 		return ir;
 	}
 	
-	
 	public static void occupy() {
 		occupied = true;
 	}
@@ -34,23 +33,20 @@ public class Decode {
 		Main.execute.setIr(ir);
 		Main.execute.occupy();
 		Main.execute.setDest(value.getOp1());
-		Main.execute.setOperand(value.getOperation());
-		
+		Main.execute.setOperand(value.getOperation());		
 		Main.execute.reg1 = reg1;
 		Main.execute.reg2 = reg2;
 		reg1 = "d_none";
 		reg2 = "d_none";
 		
 		Main.execute.setOp1(reg.get(value.getOp1()));
-		
 
 		if(value.getOperation().equals("LOAD"))
 			Main.execute.setOp2(Integer.valueOf(value.getOp2()));
 		else
 			Main.execute.setOp2(reg.get(value.getOp2()));
 		setIr(-1);
-		
-		
+
 		occupied = false;
 	}
 	

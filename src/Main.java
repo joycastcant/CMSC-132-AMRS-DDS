@@ -35,8 +35,7 @@ public class Main {
 		decode = new Decode(instructions, msc);
 		execute = new Execute(instructions, msc);
 		ma = new MemoryAccess(instructions, msc);
-		wb = new WriteBack(instructions, msc);
-		
+		wb = new WriteBack(instructions, msc);	
 		
 		do{
 			System.out.println("\n\n============================ TIME "+clockCycles+" ============================\n\n");

@@ -10,6 +10,7 @@ public class WriteBack {
 	public static String reg1, reg2;
 	public static boolean stall;
 	public static boolean occupied;
+
 	public WriteBack(HashMap<Integer, Instruction> instructions, MSC msc) {
 		this.instructions = instructions;
 		this.msc = msc;	

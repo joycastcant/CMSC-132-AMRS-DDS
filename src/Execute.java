@@ -27,8 +27,6 @@ public class Execute{
 			System.out.println("executing "+ir);
 			
 			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("E"); //add E to pipeline table
-		
-			
 			switch(operand){
 				case "LOAD":
 					load(op2);
@@ -46,11 +44,8 @@ public class Execute{
 					System.out.println("Invalid operation");
 					break;
 			}
-			
-			
-			
+					
 		}
-		
 		
 		return ir;
 	}
@@ -64,6 +59,7 @@ public class Execute{
 		Main.ma.reg2 = reg2;
 		reg1 ="e_none";
 		reg2="e_none";
+    
 		Main.ma.setIr(ir);
 		Main.ma.occupy();
 		Main.ma.setDest(dest);
