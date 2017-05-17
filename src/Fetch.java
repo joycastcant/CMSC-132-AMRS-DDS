@@ -48,7 +48,7 @@ public class Fetch {
 	public static void free() {
 		if(instructions.containsKey(ir)) {
 			Instruction a = instructions.get(ir);
-			if(Main.stallfu.isOccupied() || ((a.getOp2().equals(Main.execute.reg1) || a.getOp2().equals(Main.ma.reg1) || a.getOp2().equals(Main.wb.reg1)) || (a.getOp1().equals(Main.execute.reg1) || a.getOp1().equals(Main.ma.reg1) || a.getOp1().equals(Main.wb.reg1)))) {
+			if(Main.stallfu.isOccupied() || ((a.getOp2().equals(Main.execute.reg1) || a.getOp2().equals(Main.ma.reg1) || a.getOp2().equals(Main.wb.reg1)) || (a.getOp2().equals(Main.execute.reg2) || a.getOp2().equals(Main.ma.reg2) || a.getOp2().equals(Main.wb.reg2)) || (a.getOp1().equals(Main.execute.reg1) || a.getOp1().equals(Main.ma.reg1) || a.getOp1().equals(Main.wb.reg1)) || (a.getOp2().equals(Main.execute.reg1) || a.getOp2().equals(Main.ma.reg1) || a.getOp2().equals(Main.wb.reg1)))) {
 				Main.stallfu.addIr(ir);
 				Main.stallfu.occupy();
 			}
