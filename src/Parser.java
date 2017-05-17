@@ -2,15 +2,17 @@ import java.util.HashMap;
 import java.util.Set;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import javax.swing.JOptionPane;
 
 public class Parser {
 	public static HashMap<Integer, Instruction> instructions;
 	public static boolean valid;
 
-	public Parser(){
+	public Parser(String path){
 		instructions = new HashMap<Integer, Instruction>();
+		
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader("../files/input.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader(path));
 			String pattern = "";
 			String regex = "";
 			String line;
@@ -18,7 +20,9 @@ public class Parser {
 
 			line = reader.readLine();
 			for(int i=1; line != null && checkSyntax(line, i); i++){
-				line = line.toUpperCase();	
+				line = line.toUpperCase();
+				line = line.replaceAll("[^a-zA-Z0-9 ]", "");
+				UI.model.addRow(new Object[]{line});
 				String[] lineArray = line.split(" ");
 				Instruction newInst = new Instruction(lineArray);
 
@@ -26,7 +30,7 @@ public class Parser {
 				address++;
 				line = reader.readLine();
 			}
-			
+
 			if(line != null)
 				valid = false;
 			else
@@ -34,11 +38,9 @@ public class Parser {
 
 			Set<Integer> keys = instructions.keySet();
 			for(Integer addr : keys){
-				if(addr < address-1){
-					Instruction prev = instructions.get(addr);
-					Instruction current = instructions.get(addr + 1);
-					//Boolean bool = detectHazard(prev,current,addr);
-				}
+					Instruction a = instructions.get(addr);
+					String haza = detect(addr);
+					UI.hazmodel.addRow(new Object[]{a.getInstruction(), haza});
 			}
 
 		} catch (Exception e){
@@ -46,7 +48,7 @@ public class Parser {
 		}
 	}
 
-	public static boolean detectHazard(Instruction prev, Instruction current){
+	public static String detectHazard(Instruction prev, Instruction current){
 		String op1A = prev.getOp1();
 		String op2A = prev.getOp2();
 		String op1B = current.getOp1();
@@ -54,50 +56,23 @@ public class Parser {
 
 		String instA = prev.getOperation() + " " + op1A + " " + op2A;
 		String instB = current.getOperation() + " " + op1B + " " + op2B;
-		System.out.println(instA);
-		System.out.println(instB);
-
 
 		if(op2A.equals(op1B)){
-			if (current.getOperation().equals("CMP")) return false;
-			System.out.println("Data Hazard: Write after Read (WAR) on " + instA + " and " + instB + ".");
-			return true;
+			if (current.getOperation().equals("CMP")) return "NONE";
+			return "WAR";
 		}
 		else if(op1A.equals(op1B)){
-			if (current.getOperation().equals("CMP")) return false;
-			System.out.println("Data Hazard: Write after Write (WAW) on " + instA + " and " + instB + ".");
-			return true;
+			if (current.getOperation().equals("CMP")) return "NONE";
+			return "WAW";
 		}
 		else if(op1A.equals(op2B)){
-			System.out.println("Data Hazard: Read after Write (RAW) on " + instA + " and " + instB + ".");
-			return true;
+			return "RAW";
 		}
 
-		return false;
+		return "NONE";
 	}
 
-/*	public static boolean detectRAW(Instruction instB, int size){
-		int flag = 0;
-	
-		for (int i = size-1; i > 999; i--){
-			Instruction instA = instructions.get(i);
-
-			String op1 = instA.getOp1();
-			String op2 = instB.getOp2();
-			if (op1.equals(op2) && flag < 3){
-				String prev = instA.getOperation() + " " + instA.getOp1() + " " + instA.getOp2();
-				String current = instB.getOperation() + " " + instB.getOp1() + " " + instB.getOp2();
-				System.out.println("Data Hazard: Read after Write (RAW) on " + prev + " and " + current + ".");
-				return true;
-			}
-			flag++;
-			
-		}
-
-		return false;
-	}*/
-
-    public static int detect(int address){
+	public static String detect(int address){
 		int size = instructions.size();
     	int max_address = (1000+size) - 1;
     	boolean  haz = false;
@@ -107,37 +82,55 @@ public class Parser {
 
 		int j = address-1, flag = 1;
 		while (j >= 1000 && flag != 5 && j < max_address){
-			if (detectHazard(instructions.get(j), inst)){
-				return j;
+			if (!detectHazard(instructions.get(j), inst).equals("NONE")){
+				return detectHazard(instructions.get(j), inst);
 			}
 			j--;
 			flag++;
 		}
 
-    	return addr;
+    	return "NONE";
 	}
 
 	public static boolean checkSyntax(String line, int lineNum){
 		boolean check;
 		String[] arr = line.split(" ");
 
-		if(arr.length < 3) check = false;
+		if(arr.length < 3 || arr.length > 3) check = false;
 		else{
 			if(arr[0].equals("LOAD")){
-				int immed = Integer.valueOf(arr[2]);
-				if(!isReg(arr[1]))
+				try{
+					int immed = Integer.valueOf(arr[2]);
+					if(!isReg(arr[1]))
+						check = false;
+					else if(immed < -99 || immed > 99)
+						check = false;
+					else check = true;
+				}catch(Exception e){
 					check = false;
-				else if(immed < -99 || immed > 99)
-					check = false;
-				else check = true;
+					System.out.println("Syntax error in line " + lineNum);
+					JOptionPane.showMessageDialog(null, "Syntax error in line " + lineNum, "Syntax error", JOptionPane.INFORMATION_MESSAGE);
+					return check;
+				}
 			}else if(arr[0].equals("ADD") || arr[0].equals("SUB") || arr[0].equals("CMP")){
-				if(!isReg(arr[1]) || !isReg(arr[2]))
+				try{
+					if(!isReg(arr[1]) || !isReg(arr[2]))
+						check = false;
+					else check = true;
+				}catch(Exception ee){
+					System.out.println("A: " + line);
 					check = false;
-				else check = true;
+					System.out.println("Syntax error in line " + lineNum);
+					JOptionPane.showMessageDialog(null, "Syntax error in line " + lineNum, "Syntax error", JOptionPane.INFORMATION_MESSAGE);
+					return check;
+				}
 			}else check = false;
 		}
 
-		if(!check) System.out.println("Syntax error in line " + lineNum);
+		if(!check){
+			System.out.println("Syntax error in line " + lineNum);
+			JOptionPane.showMessageDialog(null, "Syntax error in line " + lineNum, "Syntax error", JOptionPane.INFORMATION_MESSAGE);
+		}
 
 		return check;
 	}
@@ -157,5 +150,4 @@ public class Parser {
 
 		return true;
 	}
-
 }

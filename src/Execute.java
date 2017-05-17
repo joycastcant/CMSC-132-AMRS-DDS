@@ -8,24 +8,25 @@ public class Execute{
 	public static int op1;
 	public static int op2;
 	public static int ir = -1;
-	public static boolean occupied = false;
+	public static String reg1, reg2;
+	public static boolean stall;
+	public static boolean occupied;
 	static int result;
 
-	/* OLD public Execute(MSC msc){
-		System.out.println("Executing...");
-		reg = msc.getRegisters();
-		this.msc = msc;
-	}*/
 	public Execute(HashMap<Integer, Instruction> instructions, MSC msc){
 		this.instructions = instructions;
 		this.msc = msc;
-		
+		this.reg1 = "e_none";
+		this.reg2="e_none";
+		this.stall = false;
+		this.occupied = false;
 	}
 	
 	public static int performOperation() {
 		if(ir!=-1) {
 			System.out.println("executing "+ir);
-
+			
+			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("E"); //add E to pipeline table
 			switch(operand){
 				case "LOAD":
 					load(op2);
@@ -43,8 +44,9 @@ public class Execute{
 					System.out.println("Invalid operation");
 					break;
 			}
+					
 		}
-
+		
 		return ir;
 	}
 	
@@ -53,6 +55,11 @@ public class Execute{
 	}
 	
 	public static void free() {
+		Main.ma.reg1 = reg1;
+		Main.ma.reg2 = reg2;
+		reg1 ="e_none";
+		reg2="e_none";
+    
 		Main.ma.setIr(ir);
 		Main.ma.occupy();
 		Main.ma.setDest(dest);

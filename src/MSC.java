@@ -92,8 +92,6 @@ public class MSC {
 	}
 
 	public static void setReg(String key, int val){
-		//System.out.println("ayy " + key + " " + val);
 		registers.put(key, val);
-		//System.out.println("Reg: " + registers.entrySet());
 	}
 }
