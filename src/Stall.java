@@ -8,6 +8,7 @@ public class Stall {
 	public static boolean occupied = false;
 	public static Instruction value;
 	public static ArrayList<Integer> stack = new ArrayList<Integer>();
+	public static HashMap<Integer, Integer> storu = new HashMap<Integer, Integer>();
 	
 	public Stall(HashMap<Integer, Instruction> instructions, MSC msc){
 		this.instructions = instructions;
@@ -19,7 +20,10 @@ public class Stall {
 		for(int i : stack) {
 			Instruction in = instructions.get(i);
 			System.out.println("stalling "+i);
-			if(Main.instructions.containsKey(i))Main.instructions.get(i).stages.add("S"); //add S to pipeline table
+			if(Main.instructions.containsKey(i)){
+				Main.instructions.get(i).stages.add("S"); //add S to pipeline table
+				storu.put(Main.clockCycles, 0);
+			}
 		}
 	}
 	

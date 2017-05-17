@@ -144,6 +144,10 @@ public class Main {
 	public static void begin(String path) {
 		Boolean hazard = false;
 		Parser parser = new Parser(path);
+
+		if(!parser.valid)
+			return;
+
 		int temp = 0;
 		//MSC msc = new MSC(); OLD
 		instructions = parser.instructions;
@@ -224,10 +228,26 @@ public class Main {
 		
 		clockCycles--;
 		registers = msc.getRegisters();
+
+		Set<String> keys = registers.keySet();
+		// for(String a:keys){
+		for(int i=0; i<33; i++){
+			for(String a:keys){
+				if(a.substring(1, a.length()).equals(String.valueOf(i)))
+					UI.regmodel.addRow(new Object[]{a, registers.get(a)});
+			}
+		}
+
+		UI.flagmodel.addRow(new Object[]{"OF", msc.getOf()});
+		UI.flagmodel.addRow(new Object[]{"NF", msc.getNf()});
+		UI.flagmodel.addRow(new Object[]{"ZF", msc.getZf()});
+
+		UI.stalls.setText("Stalls: " + Stall.storu.size());
 		
 		int cols = UI.model.getColumnCount()-1;
 		System.out.print(cols);
 		System.out.print("cols>clockCycles:: "+(cols<clockCycles));
+		UI.clk.setText("Cycles: " + clockCycles + "\t");
 		if(cols<clockCycles) {
 			while(cols<clockCycles) {
 				UI.model.addColumn(""+(cols+1));

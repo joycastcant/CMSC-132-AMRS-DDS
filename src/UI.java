@@ -11,6 +11,11 @@ public class UI extends JFrame {
 	String filepath;
 	final JFileChooser FC = new JFileChooser();
 	static DefaultTableModel model;
+	static DefaultTableModel hazmodel;
+	static DefaultTableModel regmodel;
+	static DefaultTableModel flagmodel;
+	static JLabel clk;
+	static JLabel stalls;
 	static JPanel center = new JPanel();
 	
 	public UI(String name) {
@@ -41,6 +46,12 @@ public class UI extends JFrame {
 		topButtons.add(chlabel);
 		
 		JButton start = new JButton("Start");
+		JPanel infoPanel = new JPanel();
+		infoPanel.setPreferredSize(new Dimension(300, 50));
+		clk = new JLabel("Cycles: 0\t");
+		stalls = new JLabel("Stalls: 0");
+		infoPanel.add(clk);
+		infoPanel.add(stalls);
 		
 		String[] hzrdCols = {"Instructions", "Hazard"};
 		Object[][] hzrdData = {};
@@ -48,23 +59,28 @@ public class UI extends JFrame {
 		hazardTable.setPreferredScrollableViewportSize(new Dimension(300, 280));
 		hazardTable.setFillsViewportHeight(true);
 		JScrollPane hzscrll = new JScrollPane(hazardTable);
+		hazmodel = (DefaultTableModel) hazardTable.getModel();
 		
 		String[] flgCols = {"Flag Register", "Status"};
 		Object[][] flgData = {};
 		JTable flagTable = new JTable(new NonEditableModel(flgData, flgCols));
-		flagTable.setPreferredScrollableViewportSize(new Dimension(300, 280));
+		flagTable.setPreferredScrollableViewportSize(new Dimension(300, 180));
 		flagTable.setFillsViewportHeight(true);
 		JScrollPane flgscrll = new JScrollPane(flagTable);
+		flagmodel = (DefaultTableModel) flagTable.getModel();
 		
 		String[] rgstrCols = {"Register", "Value"};
 		Object[][] rgstrData = {};
 		JTable regTable = new JTable(new NonEditableModel(rgstrData, rgstrCols));
-		regTable.setPreferredScrollableViewportSize(new Dimension(300, 280));
+		regTable.setPreferredScrollableViewportSize(new Dimension(300, 380));
 		regTable.setFillsViewportHeight(true);
 		JScrollPane regscrll = new JScrollPane(regTable);
+		regmodel = (DefaultTableModel) regTable.getModel();
+	
 	
 		west.add(topButtons);
 		west.add(start);
+		west.add(infoPanel);
 		west.add(hzscrll);
 		west.add(flgscrll);
 		west.add(regscrll);
@@ -110,6 +126,7 @@ public class UI extends JFrame {
 					System.out.println("Opening: " + file.getName() + ".");
 					chlabel.setText(file.getName());
 					filepath = file.getPath();
+					model.setRowCount(0);
 				} else {
 					System.out.println("Open command cancelled by user.");
 				}

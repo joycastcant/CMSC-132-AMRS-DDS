@@ -27,6 +27,7 @@ public class WriteBack {
 			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("W"); //add W to pipeline table
 			msc.setReg(dest, val);
 			System.out.println(reg);
+
 			/* for(int i = 0; i<UI.model.getRowCount(); i++) {
 				if(instructions.get(ir) != null && instructions.get(ir).getInstruction().equals(UI.model.getValueAt(i, 0))) {
 						UI.model.setValueAt(""+Main.clockCycles,i,5);
