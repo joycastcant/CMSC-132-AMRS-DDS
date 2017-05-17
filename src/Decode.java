@@ -18,7 +18,7 @@ public class Decode {
 
 	public static int getValues() {
 		if(ir!=-1) {
-			System.out.println("decoding "+ir);
+			System.out.println("decoding ");
 			
 			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("D"+ir); //add D to pipeline table
 		}

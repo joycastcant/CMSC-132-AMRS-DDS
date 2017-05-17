@@ -19,7 +19,7 @@ public class Stall {
 		for(int i : stack) {
 			Instruction in = instructions.get(i);
 			System.out.println("stalling "+i);
-			if(Main.instructions.containsKey(i))Main.instructions.get(i).stages.add("S"+i); //add S to pipeline table
+			if(Main.instructions.containsKey(i))Main.instructions.get(i).stages.add("S"); //add S to pipeline table
 		}
 	}
 	
@@ -35,7 +35,6 @@ public class Stall {
 			Main.decode.occupy();
 			if(instructions.containsKey(ir)) Main.decode.setValue(instructions.get(ir));
 			if(stack.size()==0) {
-				System.out.println("EMPTY NA GAGO");
 				occupied = false;
 			}
 		}

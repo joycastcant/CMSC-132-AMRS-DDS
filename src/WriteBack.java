@@ -24,7 +24,7 @@ public class WriteBack {
 	public static int write() {
 		if(ir!=-1) {
 			System.out.println("write back by "+ir);
-			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("W"+ir); //add W to pipeline table
+			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("W"); //add W to pipeline table
 			msc.setReg(dest, val);
 			System.out.println(reg);
 			/* for(int i = 0; i<UI.model.getRowCount(); i++) {

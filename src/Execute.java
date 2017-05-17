@@ -26,7 +26,7 @@ public class Execute{
 	
 	public static int performOperation() {
 		if(ir!=-1) {
-			System.out.println("executing "+ir);
+			System.out.println("executing ");
 			
 			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("E"+ir); //add E to pipeline table
 			/* 

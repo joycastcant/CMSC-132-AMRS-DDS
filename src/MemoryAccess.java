@@ -21,7 +21,7 @@ public class MemoryAccess {
 		if(ir!=-1) {
 			System.out.println("memaccess by "+ir);
 			
-			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("M"+ir); //add M to pipeline table
+			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("M"); //add M to pipeline table
 			
 			/* for(int i = 0; i<UI.model.getRowCount(); i++) {
 				if(instructions.get(ir) != null && instructions.get(ir).getInstruction().equals(UI.model.getValueAt(i, 0))) {

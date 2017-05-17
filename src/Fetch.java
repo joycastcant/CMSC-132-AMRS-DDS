@@ -49,7 +49,6 @@ public class Fetch {
 		if(instructions.containsKey(ir)) {
 			Instruction a = instructions.get(ir);
 			if(Main.stallfu.isOccupied() || (a.getOp2().equals(Main.execute.reg1) || a.getOp2().equals(Main.ma.reg1) || a.getOp2().equals(Main.wb.reg1))) {
-				System.out.println("STALL GAGO");
 				Main.stallfu.addIr(ir);
 				Main.stallfu.occupy();
 			}
