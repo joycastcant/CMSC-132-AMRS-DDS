@@ -29,7 +29,8 @@ public class Stall {
 	
 	public static void free() {
 		Instruction a = instructions.get(stack.get(0));
-		if(a.getOp2().equals(Main.execute.reg1) || a.getOp2().equals(Main.ma.reg1) || a.getOp2().equals(Main.wb.reg1)) {
+		if(((a.getOp2().equals(Main.execute.reg1) || a.getOp2().equals(Main.ma.reg1) || a.getOp2().equals(Main.wb.reg1)) || (a.getOp2().equals(Main.execute.reg2) || a.getOp2().equals(Main.ma.reg2) || a.getOp2().equals(Main.wb.reg2)) || (a.getOp1().equals(Main.execute.reg1) || a.getOp1().equals(Main.ma.reg1) || a.getOp1().equals(Main.wb.reg1)) || (a.getOp2().equals(Main.execute.reg1) || a.getOp2().equals(Main.ma.reg1) || a.getOp2().equals(Main.wb.reg1))))
+		{
 			// do nothing
 		}
 		else {
