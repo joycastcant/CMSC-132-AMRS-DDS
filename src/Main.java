@@ -224,9 +224,7 @@ public class Main {
 		
 		clockCycles--;
 		registers = msc.getRegisters();
-		try{
-			Thread.sleep(1000);
-		} catch(Exception ee) {}
+		
 		int cols = UI.model.getColumnCount()-1;
 		System.out.print(cols);
 		System.out.print("cols>clockCycles:: "+(cols<clockCycles));

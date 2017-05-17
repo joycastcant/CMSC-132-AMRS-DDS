@@ -18,9 +18,9 @@ public class Decode {
 
 	public static int getValues() {
 		if(ir!=-1) {
-			System.out.println("decoding ");
+			System.out.println("decoding "+ir);
 			
-			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("D"+ir); //add D to pipeline table
+			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("D"); //add D to pipeline table
 		}
 		return ir;
 		//Main.execute.performOperation(operand, op1, op2, ir);

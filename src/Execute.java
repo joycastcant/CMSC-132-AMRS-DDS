@@ -26,9 +26,9 @@ public class Execute{
 	
 	public static int performOperation() {
 		if(ir!=-1) {
-			System.out.println("executing ");
+			System.out.println("executing "+ir);
 			
-			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("E"+ir); //add E to pipeline table
+			if(Main.instructions.containsKey(ir))Main.instructions.get(ir).stages.add("E"); //add E to pipeline table
 			/* 
 			for(int i = 0; i<UI.model.getRowCount(); i++) {
 				if(instructions.get(ir) != null && instructions.get(ir).getInstruction().equals(UI.model.getValueAt(i, 0))) {
